@@ -9,11 +9,14 @@ class Page {
 
     private $options = [];
     private $defaults = [
+        "header"=>true,
+        "footer"=>true,
         "data"=>[]
     ];
 
     //O construtor será chamado assim que a classe for instanciada
     public function __construct($opts = array(), $tpl_dir = "\/views\/"){
+
         $this->options = array_merge($this->defaults, $opts); // Se vier algo no parâametro, sobrecreve o padrão
         
         //o array_merge vai meclar as informações do dois arrays e guardar no options
@@ -35,7 +38,8 @@ class Page {
 
         $this->setData($this->options["data"] );
 
-        $this->tpl->draw("header"); //será criado em todas as páginas- estará na pasta 'view'
+        if ($this->options["header"] === true) $this->tpl->draw("header");
+         //será criado em todas as páginas caso o 'header' contenha a flag 'true' - estará na pasta 'view'
 
     }
 
@@ -70,7 +74,9 @@ class Page {
 
     public function __destruct(){
 
-        $this->tpl->draw("footer"); 
+        if($this->options["footer"] === true) $this->tpl->draw("footer"); 
+
+        //Carrega o footer caso a opção 'footer' seja passado no construtor com a flag 'true'
     }
 }
 ?>
