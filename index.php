@@ -1,5 +1,7 @@
 <?php 
 
+session_start();  //inicia a sessão
+
 require_once("vendor/autoload.php");
 use \Slim\Slim;
 use \Lexter\Page;
@@ -26,7 +28,9 @@ $app->get('/', function() {
  * ROTA HOME ADMIM
  */
 $app->get('/adm', function() {
-    
+	
+	User::verifyLogin();
+
 	$page = new PageAdmin(); 
 	$page->setTpl("index"); 
 
@@ -53,7 +57,16 @@ $app->post('/adm/login', function() {
 	User::login($_POST["login"], $_POST["password"]);
 
 	header("Location: /adm");
-	exit();
+	exit;
+
+});
+
+$app->get('/adm/logout', function() {
+	
+	User::logout();
+
+	header("Location: /adm/login");
+	exit;
 
 });
 
