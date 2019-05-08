@@ -36,9 +36,9 @@ $app->get('/adm', function() {
 
 });
 
-/**
- * ROTA DE LOGIN ADMIM
- */
+///////////////////////////////////
+//        ROTA LOGIN ADM GET 
+
 $app->get('/adm/login', function() {
 	
 	// A página de login não precisa utilizar o header e o footer do template padrão, então temos que desa-
@@ -51,6 +51,8 @@ $app->get('/adm/login', function() {
 
 });
 
+///////////////////////////////////
+//        ROTA LOGIN ADM POST
 
 $app->post('/adm/login', function() {
 	
@@ -61,12 +63,69 @@ $app->post('/adm/login', function() {
 
 });
 
+////////////////////////////////////
+//      ROTA LOGOUT
+
 $app->get('/adm/logout', function() {
 	
 	User::logout();
 
 	header("Location: /adm/login");
 	exit;
+
+});
+
+//////////////////////////////////////
+//        ROTA LISTA USUARIO
+
+$app->get('/adm/users', function(){
+	User::verifyLogin();
+
+	$page = new PageAdmin();
+
+	$page->setTpl("users");
+});
+
+
+//////////////////////////////////////
+//      ROTA CREATE USUARIO
+
+$app->get('/adm/users/create', function(){
+	User::verifyLogin();
+
+	$page = new PageAdmin();
+
+	$page->setTpl("users-create");
+});
+
+
+///////////////////////////////////////
+//           ROTA UPDATE USUARIO
+
+$app->get('/adm/users/:iduser', function($iduser){  //o parâmetro iduser será capturado por $iduser na func
+	User::verifyLogin();
+
+	$page = new PageAdmin();
+
+	$page->setTpl("users-update");
+});
+
+
+
+$app->post('/adm/users/create', function(){  
+	User::verifyLogin();
+
+});
+
+
+$app->post('/adm/users/:iduser', function($iduser){  
+	User::verifyLogin();
+
+});
+
+
+$app->delete('/adm/users/:iduser', function($iduser){  
+	User::verifyLogin();
 
 });
 
