@@ -1,4 +1,4 @@
-<div class="slider-area">
+<?php if(!class_exists('Rain\Tpl')){exit;}?><div class="slider-area">
     <!-- Slider -->
     <div class="block-slider block-slider4">
         <ul class="" id="bxslider-home4">
@@ -85,23 +85,23 @@
                 <h2 class="section-title">Produtos</h2>
                 <div class="product-carousel">
 
-                    {loop="$products"}
+                    <?php $counter1=-1;  if( isset($products) && ( is_array($products) || $products instanceof Traversable ) && sizeof($products) ) foreach( $products as $key1 => $value1 ){ $counter1++; ?>
                     <div class="single-product">
                         <div class="product-f-image">
-                            <img src="{$value.desphoto}" alt="">
+                            <img src="<?php echo htmlspecialchars( $value1["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="">
                             <div class="product-hover">
                                 <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                 <a href="#" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                             </div>
                         </div>
                         
-                        <h2><a href="#">{$value.desproduct}</a></h2>
+                        <h2><a href="#"><?php echo htmlspecialchars( $value1["desproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a></h2>
                         
                         <div class="product-carousel-price">
-                            <ins>{function="formatPrice($value.vlprice)"}</ins>
+                            <ins><?php echo formatPrice($value1["vlprice"]); ?></ins>
                         </div> 
                     </div>
-                    {/loop}
+                    <?php } ?>
                     
                 </div>
             </div>
